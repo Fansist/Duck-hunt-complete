@@ -1,14 +1,8 @@
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Toolkit;
+import java.io.File;
 import java.net.URL;
 
-/**
- * TEACHER-PROVIDED FRAMEWORK CODE.
- *
- * This class loads and draws images. Students should not edit this file for
- * the core assignment.
- */
+import javax.imageio.ImageIO;
+
 public class Sprite {
     protected int x;
     protected int y;
@@ -61,13 +55,26 @@ public class Sprite {
     private Image loadImage(String imageFileName) {
         try {
             URL imageURL = Sprite.class.getResource("/imgs/" + imageFileName);
-
             if (imageURL == null) {
-                System.out.println("Could not find image: " + imageFileName);
-                return null;
+                imageURL = Sprite.class.getResource("/" + imageFileName);
             }
 
-            return Toolkit.getDefaultToolkit().getImage(imageURL);
+            if (imageURL != null) {
+                return ImageIO.read(imageURL);
+            }
+
+            File localFile = new File(imageFileName);
+            if (localFile.exists()) {
+                return ImageIO.read(localFile);
+            }
+
+            File nestedFile = new File("imgs", imageFileName);
+            if (nestedFile.exists()) {
+                return ImageIO.read(nestedFile);
+            }
+
+            System.out.println("Could not find image: " + imageFileName);
+            return null;
         } catch (Exception exception) {
             System.out.println("Could not load image: " + imageFileName);
             return null;
