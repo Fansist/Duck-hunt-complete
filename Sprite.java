@@ -1,3 +1,5 @@
+import java.awt.Graphics;
+import java.awt.Image;
 import java.io.File;
 import java.net.URL;
 
@@ -50,6 +52,14 @@ public class Sprite {
 
     public int getY() {
         return y;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 
     private Image loadImage(String imageFileName) {

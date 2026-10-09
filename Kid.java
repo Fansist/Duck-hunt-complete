@@ -1,12 +1,16 @@
 /**
- * STUDENT FILE: Dog behavior.
+ * STUDENT FILE: the retriever (this is the "Dog" from the guide, remixed as a
+ * trick-or-treater in a ghost costume).
  *
- * The GameWorld tells the Dog where the Duck landed. Your job is to make the
- * Dog move toward that location and report when the retrieval is complete.
+ * The GameWorld tells the Kid where the Pumpkin landed. The Kid runs there,
+ * picks it up, and reports that the retrieval is complete.
  */
 public class Kid extends Sprite {
-    private static final int DOG_WIDTH = 69;
-    private static final int DOG_HEIGHT = 94;
+    private static final int KID_WIDTH = 70;
+    private static final int KID_HEIGHT = 94;
+
+    // The Kid swaps between two running pictures every few frames.
+    private static final int FRAMES_PER_STEP = 6;
 
     // STUDENT SETTING
     private int speed = 6;
@@ -17,39 +21,66 @@ public class Kid extends Sprite {
     private boolean retrieving = false;
     private boolean retrievedDuck = false;
 
+    private boolean facingRight = true;
+    private int stepTimer = 0;
+    private int stepPicture = 1;
+
     public Kid() {
-        super("dog1.png", 40, GameWorld.GROUND_TOP - DOG_HEIGHT,
-                DOG_WIDTH, DOG_HEIGHT);
+        super("kid_stand.png", 40, GameWorld.GROUND_TOP - KID_HEIGHT,
+                KID_WIDTH, KID_HEIGHT);
 
         homeX = x;
         homeY = y;
     }
 
-    /** This method is provided so GameWorld can begin a retrieval. */
-    public void startRetrieving(int duckX) {
+    /**
+     * This method is provided so GameWorld can begin a retrieval.
+     * duckCenterX is the middle of the fallen Pumpkin; the Kid stops with its
+     * own middle there.
+     */
+    public void startRetrieving(int duckCenterX) {
         if (!retrieving) {
-            targetX = duckX;
+            int farthestRight = GameWorld.WORLD_WIDTH - width;
+            targetX = Math.max(0, Math.min(duckCenterX - width / 2, farthestRight));
             retrieving = true;
             retrievedDuck = false;
-            changePicture("dog2.png");
+
+            facingRight = targetX >= x;
+            stepTimer = 0;
+            stepPicture = 1;
+            changePicture(runPicture());
         }
     }
 
     /**
-     * STEP 5: make the Dog move toward targetX.
-     *
-     * Use if statements:
-     * - If x is less than targetX, increase x.
-     * - If x is greater than targetX, decrease x.
-     * - When x is close enough, set retrievedDuck to true and retrieving to
-     *   false.
+     * Moves the Kid toward targetX one step per frame. When the Kid is close
+     * enough it reports that the retrieval is complete.
      */
     public void update() {
         if (!retrieving) {
             return;
         }
 
-        // Write your Dog movement code here.
+        if (x < targetX) {
+            x = x + speed;
+        } else if (x > targetX) {
+            x = x - speed;
+        }
+
+        // Within one step of the target counts as arrived.
+        if (Math.abs(x - targetX) <= speed) {
+            x = targetX;
+            retrievedDuck = true;
+            retrieving = false;
+            return;
+        }
+
+        stepTimer = stepTimer + 1;
+        if (stepTimer >= FRAMES_PER_STEP) {
+            stepTimer = 0;
+            stepPicture = 3 - stepPicture;
+            changePicture(runPicture());
+        }
     }
 
     public boolean isRetrieving() {
@@ -60,11 +91,15 @@ public class Kid extends Sprite {
         return retrievedDuck;
     }
 
-    /** After Step 5, run the game several times and verify that reset works. */
+    /** Puts the Kid back at home, standing still. GameWorld calls this between rounds. */
     public void reset() {
         setLocation(homeX, homeY);
         retrieving = false;
         retrievedDuck = false;
-        changePicture("dog1.png");
+        changePicture("kid_stand.png");
+    }
+
+    private String runPicture() {
+        return (facingRight ? "kid_right" : "kid_left") + stepPicture + ".png";
     }
 }
