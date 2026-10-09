@@ -1,8 +1,0 @@
-# Compiled output
-*.class
-bin/
-out/
-
-# OS / editor files
-.DS_Store
-Thumbs.db

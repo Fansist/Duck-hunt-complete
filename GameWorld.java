@@ -6,12 +6,9 @@ import java.awt.Graphics;
 /**
  * TEACHER-PROVIDED FRAMEWORK CODE.
  *
- * GameWorld stores three named Ducks (the Pumpkins), draws scenery and
- * objects in layers, and coordinates the Dog (the Kid). Students should not
- * edit this file for the core assignment.
- *
- * It also plays the sound effects (shot, miss, fall, game over) and lets the
- * player click to play again once the game has ended.
+ * GameWorld stores three named Ducks, draws scenery and objects in layers,
+ * and coordinates the Dog. Students should not edit this file for the core
+ * assignment.
  */
 public class GameWorld {
     public static final int WORLD_WIDTH = 900;
@@ -19,8 +16,6 @@ public class GameWorld {
     public static final int GROUND_TOP = 440;
 
     private static final int START_STARS = 5;
-
-    /** Frames to wait after the game ends before a click restarts it (about 1 second). */
     private static final int RESTART_DELAY_FRAMES = 60;
 
     private Pumpkin duck1;
@@ -30,9 +25,6 @@ public class GameWorld {
     private Kid dog;
     private Background background = new Background();
     private Foreground foreground = new Foreground();
-
-    // Lives are shown as little pumpkins: a whole one for each life left,
-    // a smashed one for each life lost.
     private Sprite lifeLeft = new Sprite("life.png", 0, 0, 46, 52);
     private Sprite lifeLost = new Sprite("life_lost.png", 0, 0, 50, 30);
 
@@ -133,7 +125,6 @@ public class GameWorld {
         }
     }
 
-    /** Draws one little pumpkin per star: whole if it is left, smashed if it is lost. */
     private void paintLives(Graphics g) {
         int iconTop = 12;
         int slotWidth = 58;
@@ -176,7 +167,6 @@ public class GameWorld {
         }
     }
 
-    /** Puts every object back to its starting state and begins a new game. */
     private void restart() {
         stars = START_STARS;
         finished = false;
@@ -207,7 +197,6 @@ public class GameWorld {
         }
     }
 
-    /** Draws text with a dark shadow so it can be read against the sky. */
     private void drawText(Graphics g, String text, int textX, int textY) {
         g.setColor(new Color(0, 0, 0, 170));
         g.drawString(text, textX + 2, textY + 2);

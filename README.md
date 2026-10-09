@@ -8,67 +8,6 @@ If you are starting by yourself, follow the steps in order. Run the game
 before you change anything, make one small change at a time, and use the
 graphic organizer to record what you expected and what you actually saw.
 
-## Project status: completed
-
-This copy of the project is finished and playable. Shoot the three pumpkins
-one at a time. Each shot pumpkin falls and smashes, and the Kid runs out to
-pick it up. You lose a life (a little pumpkin) for every miss. Retrieve all
-three pumpkins to win. After the game ends, wait a second and click to play
-again.
-
-What is different from the starter:
-
-- **Class names.** The guide below says `Duck` and `Dog`. In this project the
-  target is `Pumpkin.java` and the retriever is `Kid.java`. Everything the
-  guide says about the Duck and the Dog applies to those two classes.
-- **Folder layout.** The files sit in the project root instead of
-  `src/imgs`. `Sprite` (images) and `Music` (sounds) look in `/imgs` or
-  `/sounds`, then the project root, then the working directory, so either
-  layout works.
-- **Steps 1-7 are done.** The Pumpkin moves, bounces off the sides, the top of
-  the window, and the top of the ground, falls when shot, and resets. The Kid
-  walks to the fallen Pumpkin. `Frame.java` declares and adds all three
-  Pumpkins; each one is faster than the last and starts in a random direction.
-- **The Kid.** The Dog is replaced by a trick-or-treater in a ghost costume
-  carrying a pumpkin bucket (`kid_stand.png`, `kid_right1.png`,
-  `kid_right2.png`, `kid_left1.png`, `kid_left2.png`). It faces the way it is
-  running, swaps between two running pictures, and stops centered on the
-  fallen Pumpkin.
-- **Hand-drawn fall art.** `ground.png` (autumn trees and grass),
-  `pumpkin_smashed.png` (shown when a shot Pumpkin lands), and `life.png` /
-  `life_lost.png` (the lives display) come from the hand-drawn art sheet.
-  The starter's green tree, bushes, and dog pictures were removed.
-- **Sound.** `Music.java` plays the four sound files: `Gun.wav` on every shot,
-  `Pumpkin Fall.wav` on a hit, `Missed.wav` on a miss, and `Lose.wav` on the
-  miss that uses up the last life. If a computer has no audio device, the game
-  runs silently.
-- **Halloween theme.** A purple dusk sky with a moon (`Background.java`), the
-  pumpkin target, and the window title "Pumpkin Hunt".
-
-### Build and run without an IDE
-
-Java 8 or newer. From the project folder:
-
-```
-javac *.java
-java Frame
-```
-
-### Changes to the teacher-provided files
-
-These were needed to finish the project, so they are listed here:
-
-- `Sprite.java` - added the missing `Graphics` and `Image` imports (the
-  starter did not compile without them) and `getWidth()` / `getHeight()`.
-- `GameWorld.java` - `GROUND_TOP` is now 440 so the Kid and the Pumpkins stand
-  on the grass in front of the trees. It plays the sound effects, draws the
-  lives as little pumpkins, supports click-to-play-again, and tells the Kid
-  where the middle of the fallen Pumpkin is. The tree and bushes are gone.
-- `Foreground.java` - draws the new `ground.png` (the trees and the grass
-  field), placed so the tree trunks sit just behind `GROUND_TOP`.
-- `Background.java` - the dusk sky and moon.
-- `Tree.java` and `Bush.java` - removed; the trees are part of `ground.png`.
-
 ## Before you begin
 
 1. Open this project in Eclipse. If it is not already in your workspace, use
@@ -81,7 +20,7 @@ These were needed to finish the project, so they are listed here:
    press `F5` to refresh it.
 
 The game window is 900 pixels wide and 600 pixels tall. The ground begins at
-`GameWorld.GROUND_TOP`, which is y = 440. You do not need to memorize these
+`GameWorld.GROUND_TOP`, which is y = 370. You do not need to memorize these
 numbers; they are provided so your if statements and images can line up with
 the game world.
 
@@ -105,10 +44,11 @@ Do not edit these files for the core assignment:
 - `Sprite.java` — image loading and drawing framework
 - `GameWorld.java` — three named Duck fields, direct update and drawing calls, and game rules
 - `Background.java` — draws the sky
-- `Foreground.java` — draws the trees and the ground
+- `Foreground.java` — draws the ground
+- `Tree.java` and `Bush.java` — draw scenery
 
 The visual classes are drawn in layers: background, tree and ground scenery,
-moving Ducks and Dog, then the lives display. You can read these classes
+moving Ducks and Dog, then the stars/lives text. You can read these classes
 to see how each object has a job, but keep your coding attention on the
 student files.
 
@@ -119,8 +59,8 @@ student files.
   `update()` and `paint()` methods, and manages stars, the Dog, and the next Duck.
 - `Duck` controls movement, bouncing, falling, and resetting.
 - `Dog` moves toward the fallen Duck and reports when retrieval is complete.
-- `Background` and `Foreground` draw the sky, the trees, and the ground. They
-  are framework classes for the core assignment.
+- `Background`, `Foreground`, `Tree`, and `Bush` draw scenery. They are
+  framework classes for the core assignment.
 
 ## The most important habit: run and check
 
@@ -142,7 +82,7 @@ You should see:
 
 - A game window
 - The background and ground
-- Autumn trees and a grass field
+- A tree and bushes
 - One Duck
 - A Dog at the bottom
 - A stars/lives display
@@ -298,9 +238,10 @@ same size and shape so the Dog does not jump when its picture changes.
 ### Optional scenery remix
 
 For the core assignment, do not edit the scenery classes. If your teacher
-approves an extension, you can change the image in `Foreground.java` or change
-the sky colors in `Background.java`. The same rule applies: make one change,
-run the game, and check what changed.
+approves an extension, you can change the image and size in `Tree.java` or
+`Foreground.java`, change the sky color in `Background.java`, or change the
+Java shapes in `Bush.java`. The same rule applies: make one change, run the
+game, and check what changed.
 
 ### Other easy settings
 
@@ -329,9 +270,10 @@ Your finished game should have:
 
 | Object | Main code location | Starting display size |
 | --- | --- | --- |
-| Duck / target | `Pumpkin.java` constructor | `100 x 100` |
-| Dog | `Kid.java` constants | `70 x 94` |
-| Ground and trees | `Foreground.java` | `900 x 343` |
+| Duck / target | `Duck.java` constructor | `90 x 90` |
+| Dog | `Dog.java` constants | `69 x 94` |
+| Tree | `Tree.java` | `173 x 260` |
+| Ground | `Foreground.java` | `900 x 230` |
 
 These are display sizes, not required file sizes. Your source image can be
 larger or smaller; the `Sprite` class scales it to the numbers in the code.
@@ -358,7 +300,7 @@ larger or smaller; the `Sprite` class scales it to the numbers in the code.
 - Give each of the three targets a different start position or movement rule.
 - Activate two targets at the same time.
 - Add a special target worth extra stars.
-- Add a game-over restart button. (Done: click to play again.)
-- Add sound. (Done: `Music.java`.)
-- Make the Dog use different images while moving. (Done: the Kid swaps running pictures.)
+- Add a game-over restart button.
+- Add sound.
+- Make the Dog use different images while moving.
 - Make each target move differently.

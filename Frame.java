@@ -21,19 +21,21 @@ public class Frame extends JPanel implements ActionListener {
     // ===============================
     // STUDENT OBJECTS
     // ===============================
-    // Each Pumpkin has its own start position and speed (x speed, y speed),
-    // so the targets get faster as the game goes on.
     private Pumpkin duck1 = new Pumpkin(150, 120, 4, 2);
+
+    // STEP 6: Uncomment these one at a time, or create your own Ducks.
+    // private Duck duck2 = new Duck(380, 180);
+    // private Duck duck3 = new Duck(620, 100);
     private Pumpkin duck2 = new Pumpkin(380, 180, 5, 3);
     private Pumpkin duck3 = new Pumpkin(620, 100, 7, 4);
 
     private Kid dogObject = new Kid();
     private GameWorld world = new GameWorld(dogObject);
-
     public Frame() {
-        // Every Pumpkin must be added to the world. They become active one
-        // at a time, after the Dog retrieves the previous one.
+        // STEP 6: Add each Duck to the world after declaring it above.
         world.addDuck(duck1);
+        // world.addDuck(duck2);
+        // world.addDuck(duck3);
         world.addDuck(duck2);
         world.addDuck(duck3);
 

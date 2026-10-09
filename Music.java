@@ -5,21 +5,6 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
-/**
- * Plays a short .wav sound effect (or a looping song).
- *
- * <pre>
- * Music gunShot = new Music("Gun.wav", false);   // false = play once
- * gunShot.play();
- * </pre>
- *
- * The sound file is looked up the same way Sprite looks up images: first as a
- * classpath resource in /sounds or the project root, then as a plain file in
- * the working directory (or a "sounds" folder inside it).
- *
- * If a file is missing or the computer has no usable audio device, the game
- * prints one message and keeps running silently instead of crashing.
- */
 public class Music {
     private final boolean loop;
     private Clip clip;
@@ -45,7 +30,6 @@ public class Music {
         }
     }
 
-    /** Starts the sound from the beginning. Restarts it if it is already playing. */
     public void play() {
         if (clip == null) {
             return;
@@ -61,7 +45,6 @@ public class Music {
         }
     }
 
-    /** Stops the sound. */
     public void stop() {
         if (clip != null) {
             clip.stop();
